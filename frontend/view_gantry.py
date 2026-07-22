@@ -49,6 +49,7 @@ class GantryControlView(QWidget):
     speedChanged = pyqtSignal(int)
 
     setHomeRequested = pyqtSignal()
+    returnHomeRequested = pyqtSignal()
 
     allStopRequested = pyqtSignal()
 
@@ -210,12 +211,15 @@ class GantryControlView(QWidget):
         # -------------------------------------------------------------
         # Set Home
         # -------------------------------------------------------------
-
+        self.homeGrid = QGridLayout()
         self.setHomeButton = QPushButton("Set Home")
         self.setHomeButton.setObjectName("setHomeButton")
-        
+        self.returnHomeButton = QPushButton("Go Home")
+        # self.setHomeButton.setObjectName("setHomeButton")
+        self.homeGrid.addWidget(self.setHomeButton,0,0)
+        self.homeGrid.addWidget(self.returnHomeButton,0,1)
 
-        leftLayout.addWidget(self.setHomeButton)
+        leftLayout.addLayout(self.homeGrid)
 
         # Output window for messages/errors
         leftLayout.addWidget(QLabel("Output"))
@@ -370,6 +374,10 @@ class GantryControlView(QWidget):
 
         self.setHomeButton.clicked.connect(
             self.setHomeRequested.emit
+        )
+
+        self.returnHomeButton.clicked.connect(
+            self.returnHomeRequested.emit
         )
 
         # All Stop

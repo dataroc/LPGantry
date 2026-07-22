@@ -49,6 +49,7 @@ class gantryControl(QObject):
         self.view.connectGantry.connect(self.retry_connection)
         self.view.allStopRequested.connect(self.allstop)
         self.view.setHomeRequested.connect(self.set_home)
+        self.view.returnHomeRequested.connect(self.return_home)
         # self.view.load_gcode_clicked.connect(self.load_gcode)
         # self.view.validate_path_clicked.connect(self.validatePath)
         # self.view.load_rapid_clicked.connect(self.load_rapid)
@@ -63,6 +64,29 @@ class gantryControl(QObject):
         self.zSum = 0
         self.homed = True
         print("Gantry Home has been set.")
+
+    def return_home(self):
+        if self.homed:
+            homing = ['X','Y','Z']
+            dist = [self.xSum,self.ySum,self.zSum]
+            old_speed = self.jog_speed
+            self.set_jog_speed(15)
+            for idx,axis in enumerate(homing):
+                rsp = self.jog(axis,-1,dist[idx])
+                print("[HOMING] " + rsp)
+                complete = False
+                while not complete:
+                    rsp = self.jog(axis,-1,dist[idx])
+                    if rsp is None:
+                        return
+                    if "Please Wait" in rsp:
+                        time.sleep(0.5)
+                        continue
+
+                    complete = True
+            self.set_jog_speed(old_speed)
+        else:
+            print("[ERROR] Cannot return to Home. Home is not set.")
 
     def retry_connection(self):
         self.view.connectionStatus.setText("Attempting to connect...")
@@ -89,7 +113,7 @@ class gantryControl(QObject):
             if rsp == False:
                 self.handle_disconnect()
             else:
-                print(rsp)
+                print(rsp.strip('\n'))
                 return rsp
         except Exception as e:
             self.handle_disconnect()
@@ -105,30 +129,41 @@ class gantryControl(QObject):
             self.send("S"+str(speed))
             self.jog_speed = speed
     
-    def jog(self,axis:str,direction:float):
+    def jog(self,axis:str,direction:float, increment=None):
+        if increment is None:
+            increment = self.jog_increment
+
         if self.comms.ser_con is None:
             print(f"[ERROR] Gantry is disconnected. Cannot jog.")
+            return "Disconnect"
         else:
             if self.homed:
-                if axis == "X" and (0 <= (self.xSum+direction*self.jog_increment) <= self.xlim):
-                    rsp = self.send(axis+str(direction*self.jog_increment))
+                if axis == "X" and (0 <= (self.xSum+direction*increment) <= self.xlim):
+                    rsp = self.send(axis+str(direction*increment))
                     if 'Please Wait' not in rsp:
-                        self.xSum = self.xSum+direction*self.jog_increment
+                        self.xSum = self.xSum+direction*increment
+                    return rsp
                     
-                elif axis == "Y" and (0 <= (self.ySum+direction*self.jog_increment) <= self.ylim):
-                    rsp = self.send(axis+str(direction*self.jog_increment))
+                elif axis == "Y" and (0 <= (self.ySum+direction*increment) <= self.ylim):
+                    rsp = self.send(axis+str(direction*increment))
                     if 'Please Wait' not in rsp:
-                        self.ySum = self.ySum+direction*self.jog_increment
+                        self.ySum = self.ySum+direction*increment
+                    return rsp
                     
-                elif axis == "Z" and (0 <= (self.zSum+direction*self.jog_increment) <= self.zlim):
-                    rsp = self.send(axis+str(direction*self.jog_increment))
+                elif axis == "Z" and (0 <= (self.zSum+direction*increment) <= self.zlim):
+                    old_speed = self.jog_speed
+                    self.set_jog_speed(10) # prevents skipping
+                    rsp = self.send(axis+str(direction*increment))
                     if 'Please Wait' not in rsp:
-                        self.zSum = self.zSum+direction*self.jog_increment
+                        self.zSum = self.zSum+direction*increment
+                    self.set_jog_speed(old_speed)
+                    return rsp
                 else:
                     print(f"[ERROR][JOG] Software imposed Jogging Limit Exceeded in {axis}.\n    X Limit: {self.xlim} Pos: {self.xSum}\n    Y Limit: {self.ylim} Pos: {self.ySum}\n    Z Limit: {self.zlim} Pos: {self.zSum}\n")
-
+                    return "limit"
             else:
-                self.send(axis+str(direction*self.jog_increment))
+                rsp = self.send(axis+str(direction*increment))
+                return rsp
 
     def allstop(self):
         if self.comms.ser_con is None:
