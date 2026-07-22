@@ -1,0 +1,336 @@
+/*==========================================================
+    Metrology Gantry Dark Theme
+==========================================================*/
+
+/*
+MutedBlue      rgb(34,124,157)
+Teal           rgb(23,195,178)
+MutedYellow    rgb(255,203,119)
+BrickPink      rgb(254,109,115)
+BrightMagenta  rgb(164,3,111)
+DeepPurple     rgb(12,27,51)
+DustyPurple    rgb(208,207,236)
+OffWhite       rgb(254,249,239)
+*/
+
+/*==========================================================
+    TAB WINDOW
+==========================================================*/
+
+QTabWidget{
+    background-color: rgb(32,34,38);
+    color: rgb(254,249,239);
+    font-family: "Segoe UI";
+    font-size: 11pt;
+}
+QTabBar::tab:selected{
+    background-color: rgb(108, 107, 136);
+}
+QTabBar::tab:hover{
+    background-color: rgb(158, 157, 186);
+    color: black;
+}
+QTabBar::tab {
+    border-radius: 4px;
+    padding: 4px 4px 4px 4px;
+    background-color: rgb(78, 77, 106);
+}
+QTabWidget::pane{
+    padding-top: 1px;
+    background-color: rgb(63, 63, 63);
+}
+/*==========================================================
+    MAIN WINDOW
+==========================================================*/
+
+QWidget
+{
+    background-color: rgb(42,44,48);
+    color: rgb(254,249,239);
+    font-family: "Segoe UI";
+    font-size: 11pt;
+}
+
+
+/*==========================================================
+    LABELS
+==========================================================*/
+
+QLabel#sectionHeader
+{
+    color: rgb(254,249,239);
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+QLabel#connectionStatus
+{
+    color: rgb(110, 115, 125);
+    font-weight: bold;
+    font-style: italic;
+}
+
+QLabel#valueLabel
+{
+    color: rgba(23, 195, 178);
+    font-weight: bold;
+    min-width: 32px;
+    text-align: right;
+}
+
+QLabel#jogSliderLabel,
+QLabel#speedSliderLabel
+{
+    color: rgb(220,220,220);
+}
+
+
+/*==========================================================
+    PUSH BUTTONS
+==========================================================*/
+
+QPushButton
+{
+    background-color: rgb(70,72,77);
+    color: rgb(254,249,239);
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 6px 14px;
+
+    min-height: 24px;
+}
+
+QPushButton:hover
+{
+    background-color: rgb(90,92,98);
+}
+
+QPushButton:pressed
+{
+    background-color: rgb(55,57,62);
+}
+
+
+/*----------------------------------------------------------
+    Connect
+----------------------------------------------------------*/
+
+QPushButton#Connect
+{
+    background-color: rgb(34,124,157);
+}
+
+QPushButton#Connect:hover
+{
+    background-color: rgb(46,145,182);
+}
+
+QPushButton#Connect:pressed
+{
+    background-color: rgb(28,102,129);
+}
+
+
+/*----------------------------------------------------------
+    Jog Buttons
+----------------------------------------------------------*/
+
+QPushButton#PlusButton,
+QPushButton#MinusButton
+{
+    background-color: rgb(70,72,77);
+}
+
+QPushButton#PlusButton:hover,
+QPushButton#MinusButton:hover
+{
+    background-color: rgb(95,98,103);
+}
+
+QPushButton#PlusButton:pressed,
+QPushButton#MinusButton:pressed
+{
+    background-color: rgb(55,57,60);
+}
+
+
+/*----------------------------------------------------------
+    Set Speed
+----------------------------------------------------------*/
+
+QPushButton#setSpeedbtn
+{
+    background-color: rgb(34,124,157);
+}
+
+QPushButton#setSpeedbtn:hover
+{
+    background-color: rgb(55,145,178);
+}
+
+QPushButton#setSpeedbtn:pressed
+{
+    background-color: rgb(26,100,128);
+}
+
+
+/*----------------------------------------------------------
+    Set Home
+----------------------------------------------------------*/
+
+QPushButton#setHomeButton
+{
+    background-color: rgb(34,124,157);
+}
+
+QPushButton#setHomeButton:hover
+{
+    background-color: rgb(55,145,178);
+}
+
+QPushButton#setHomeButton:pressed
+{
+    background-color: rgb(26,100,128);
+}
+
+
+/*----------------------------------------------------------
+    Emergency Stop
+----------------------------------------------------------*/
+
+QPushButton#allStop
+{
+    background-color: rgb(254,109,115);
+    color: rgb(214,69,75);
+    font-weight: bold;
+    font-size: 48pt;
+}
+
+QPushButton#allStop:hover
+{
+    background-color: rgb(255,132,138);
+    color: rgb(224,79,85);
+}
+
+QPushButton#allStop:pressed
+{
+    background-color: rgb(215,75,80);
+    color: rgb(204,59,65);
+}
+
+
+/*==========================================================
+    SLIDERS
+==========================================================*/
+
+QSlider::groove:horizontal
+{
+    height: 6px;
+
+    background: rgb(52,54,58);
+
+    border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal
+{
+    background: rgb(34,124,157);
+
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal
+{
+    background: rgb(244,239,229);
+
+    width: 18px;
+
+    margin: -6px 0px;
+
+    border-radius: 9px;
+}
+
+QSlider::handle:horizontal:hover
+{
+    background: rgb(255,255,255);
+}
+
+QSlider::handle:horizontal:pressed
+{
+    background: rgb(224,219,209);
+}
+
+
+/*==========================================================
+    FRAMES
+==========================================================*/
+
+QFrame
+{
+    background-color: rgb(42,44,48);
+
+    border-radius: 8px;
+}
+
+
+/*==========================================================
+    TOOLPATH PLACEHOLDER
+==========================================================*/
+
+QFrame#toolpathVisualizer
+{
+    background-color: rgb(34,36,40);
+
+    border: 1px solid rgb(70,72,77);
+
+    border-radius: 8px;
+}
+
+/* 1. Main scroll bar background track */
+QScrollBar:vertical {
+    background-color: rgb(42,44,48);
+    width: 14px;
+    margin: 1px 0 1px 0; /* Leaves space at the top and bottom for arrows */
+    border: none;
+}
+
+/* 2. The draggable handle slider */
+QScrollBar::handle:vertical {
+    background-color: #4f4f4f;
+    min-height: 20px;
+    border-radius: 4px;
+    margin: 2px; /* Gives padding inside the track */
+}
+
+/* Handle appearance when hovered or clicked */
+QScrollBar::handle:vertical:hover {
+    background-color: #6e6e6e;
+}
+QScrollBar::handle:vertical:pressed {
+    background-color: #8a8a8a;
+}
+
+/* 3. The top step button (Up Arrow Container) */
+QScrollBar::sub-line:vertical {
+    background-color: #2b2b2b;
+    height: 1px;
+}
+
+/* 4. The bottom step button (Down Arrow Container) */
+QScrollBar::add-line:vertical {
+    background-color: #2b2b2b;
+    height: 1px;
+}
+
+/* 5. Turning off the default arrow symbols or drawing custom text/background */
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    background: none;
+    border: none;
+}
+
+/* 6. Background of the track areas above and below the handle */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
