@@ -48,7 +48,7 @@ class gantryControl(QObject):
         self.view.jogChanged.connect(self.set_jog_increment)
         self.view.connectGantry.connect(self.retry_connection)
         self.view.allStopRequested.connect(self.allstop)
-        self.view.setHomeRequested.conned(self.set_home)
+        self.view.setHomeRequested.connect(self.set_home)
         # self.view.load_gcode_clicked.connect(self.load_gcode)
         # self.view.validate_path_clicked.connect(self.validatePath)
         # self.view.load_rapid_clicked.connect(self.load_rapid)
@@ -62,6 +62,7 @@ class gantryControl(QObject):
         self.ySum = 0
         self.zSum = 0
         self.homed = True
+        print("Gantry Home has been set.")
 
     def retry_connection(self):
         self.view.connectionStatus.setText("Attempting to connect...")

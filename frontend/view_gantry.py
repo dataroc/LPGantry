@@ -314,7 +314,7 @@ class GantryControlView(QWidget):
 
         # ###############################################################
 
-        # mainLayout.addWidget(leftPanel)
+        mainLayout.addWidget(leftPanel)
         # mainLayout.addWidget(rightPanel, 1)
 
     # ==================================================================
