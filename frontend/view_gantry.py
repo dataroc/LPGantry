@@ -217,6 +217,13 @@ class GantryControlView(QWidget):
 
         leftLayout.addWidget(self.setHomeButton)
 
+        # Output window for messages/errors
+        leftLayout.addWidget(QLabel("Output"))
+        self.output_window = QTextEdit()
+        self.output_window.setReadOnly(True)
+        self.output_window.setMaximumHeight(75)
+        leftLayout.addWidget(self.output_window)
+
         #leftLayout.addStretch()
 
         # -------------------------------------------------------------
@@ -236,10 +243,10 @@ class GantryControlView(QWidget):
         # RIGHT PANEL
         ###############################################################
 
-        rightPanel = QFrame()
-        rightPanel.setObjectName("rightPanel")
+        # rightPanel = QFrame()
+        # rightPanel.setObjectName("rightPanel")
 
-        rightLayout = QVBoxLayout(rightPanel)
+        # rightLayout = QVBoxLayout(rightPanel)
 
         # =============================================================
         # PLACEHOLDER
@@ -256,23 +263,23 @@ class GantryControlView(QWidget):
 
         # Placeholder widget
 
-        toolbarPlaceholder = QLabel(
-            "Future Toolpath Controls Placeholder"
-        )
+        # toolbarPlaceholder = QLabel(
+        #     "Future Toolpath Controls Placeholder"
+        # )
 
-        toolbarPlaceholder.setAlignment(
-            Qt.AlignmentFlag.AlignCenter
-        )
+        # toolbarPlaceholder.setAlignment(
+        #     Qt.AlignmentFlag.AlignCenter
+        # )
 
-        toolbarPlaceholder.setObjectName(
-            "toolpathToolbarPlaceholder"
-        )
+        # toolbarPlaceholder.setObjectName(
+        #     "toolpathToolbarPlaceholder"
+        # )
 
-        toolbarPlaceholder.setFrameShape(
-            QFrame.Shape.Box
-        )
+        # toolbarPlaceholder.setFrameShape(
+        #     QFrame.Shape.Box
+        # )
 
-        rightLayout.addWidget(toolbarPlaceholder)
+        # rightLayout.addWidget(toolbarPlaceholder)
 
         # =============================================================
         # PLACEHOLDER
@@ -286,34 +293,29 @@ class GantryControlView(QWidget):
         #
         # =============================================================
 
-        self.visualizerPlaceholder = QFrame()
+        # self.visualizerPlaceholder = QFrame()
 
-        self.visualizerPlaceholder.setObjectName(
-            "toolpathVisualizer"
-        )
+        # self.visualizerPlaceholder.setObjectName(
+        #     "toolpathVisualizer"
+        # )
 
-        self.visualizerPlaceholder.setFrameShape(
-            QFrame.Shape.Box
-        )
+        # self.visualizerPlaceholder.setFrameShape(
+        #     QFrame.Shape.Box
+        # )
 
-        self.visualizerPlaceholder.setSizePolicy(
-            QSizePolicy.Policy.Expanding,
-            QSizePolicy.Policy.Expanding
-        )
+        # self.visualizerPlaceholder.setSizePolicy(
+        #     QSizePolicy.Policy.Expanding,
+        #     QSizePolicy.Policy.Expanding
+        # )
 
-        rightLayout.addWidget(self.visualizerPlaceholder)
+        # rightLayout.addWidget(self.visualizerPlaceholder)
 
-        # Output window for messages/errors
-        rightLayout.addWidget(QLabel("Output"))
-        self.output_window = QTextEdit()
-        self.output_window.setReadOnly(True)
-        self.output_window.setMaximumHeight(75)
-        rightLayout.addWidget(self.output_window)
+        
 
-        ###############################################################
+        # ###############################################################
 
-        mainLayout.addWidget(leftPanel)
-        mainLayout.addWidget(rightPanel, 1)
+        # mainLayout.addWidget(leftPanel)
+        # mainLayout.addWidget(rightPanel, 1)
 
     # ==================================================================
     # Signal Connections

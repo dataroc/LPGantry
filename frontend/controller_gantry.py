@@ -35,18 +35,33 @@ class gantryControl(QObject):
         self.gcode_path = None
         self.project = self.interfaceState.get_PROJECT()
         self.config_dict = None
+        self.homed = False
+        self.xlim = 500
+        self.ylim = 500
+        self.zlim = 300
+        self.xSum = 0
+        self.ySum = 0
+        self.zSum = 0
 
         self.view.jogRequested.connect(self.jog)
         self.view.speedChanged.connect(self.set_jog_speed)
         self.view.jogChanged.connect(self.set_jog_increment)
         self.view.connectGantry.connect(self.retry_connection)
         self.view.allStopRequested.connect(self.allstop)
+        self.view.setHomeRequested.conned(self.set_home)
         # self.view.load_gcode_clicked.connect(self.load_gcode)
         # self.view.validate_path_clicked.connect(self.validatePath)
         # self.view.load_rapid_clicked.connect(self.load_rapid)
         # self.view.transform_clicked.connect(self.transform_rapid)
         # self.view.run_clicked.connect(self.run)
         # self.populate_config_dropdown()
+
+
+    def set_home(self):
+        self.xSum = 0
+        self.ySum = 0
+        self.zSum = 0
+        self.homed = True
 
     def retry_connection(self):
         self.view.connectionStatus.setText("Attempting to connect...")
@@ -92,7 +107,18 @@ class gantryControl(QObject):
         if self.comms.ser_con is None:
             print(f"[ERROR] Gantry is disconnected. Cannot jog.")
         else:
-            self.send(axis+str(direction*self.jog_increment))
+            if self.homed:
+                if axis == "X" and (0 <= (self.xSum+direction*self.jog_increment) <= self.xlim):
+                    self.send(axis+str(direction*self.jog_increment))
+                elif axis == "Y" and (0 <= (self.ySum+direction*self.jog_increment) <= self.ylim):
+                    self.send(axis+str(direction*self.jog_increment))
+                elif axis == "Z" and (0 <= (self.zSum+direction*self.jog_increment) <= self.zlim):
+                    self.send(axis+str(direction*self.jog_increment))
+                else:
+                    print(f"[ERROR][JOG] Software imposed Jogging Limit Exceeded in {axis}.\n    X Limit: {self.xlim}\n    Y Limit: {self.ylim}\n    Z Limit: {self.zlim}\n")
+
+            else:
+                self.send(axis+str(direction*self.jog_increment))
 
     def allstop(self):
         if self.comms.ser_con is None:
