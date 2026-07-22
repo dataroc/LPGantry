@@ -24,9 +24,9 @@ class gantryControl(QObject):
     def __init__(self,view,systemState,interfaceState,parent = None):
         super().__init__()
         self.comms = serialDevice()
-        self.jog_speed = 20
-        self.jog_increment = 10
+        self.jog_speed = 0
         self.view = view
+        self.jog_increment = 50
         self.systemState = systemState
         self.interfaceState = interfaceState
         self.PARENT_DIRECTORY = self.interfaceState.get_PARENT_DIRECTORY()
@@ -36,9 +36,9 @@ class gantryControl(QObject):
         self.project = self.interfaceState.get_PROJECT()
         self.config_dict = None
         self.homed = False
-        self.xlim = 500
-        self.ylim = 500
-        self.zlim = 300
+        self.xlim = 300
+        self.ylim = 275
+        self.zlim = 216
         self.xSum = 0
         self.ySum = 0
         self.zSum = 0
@@ -90,6 +90,7 @@ class gantryControl(QObject):
                 self.handle_disconnect()
             else:
                 print(rsp)
+                return rsp
         except Exception as e:
             self.handle_disconnect()
             print(f"[ERROR][GANTRYCONTROL][SEND] Something went wrong in sending. {e}")
@@ -110,13 +111,21 @@ class gantryControl(QObject):
         else:
             if self.homed:
                 if axis == "X" and (0 <= (self.xSum+direction*self.jog_increment) <= self.xlim):
-                    self.send(axis+str(direction*self.jog_increment))
+                    rsp = self.send(axis+str(direction*self.jog_increment))
+                    if 'Please Wait' not in rsp:
+                        self.xSum = self.xSum+direction*self.jog_increment
+                    
                 elif axis == "Y" and (0 <= (self.ySum+direction*self.jog_increment) <= self.ylim):
-                    self.send(axis+str(direction*self.jog_increment))
+                    rsp = self.send(axis+str(direction*self.jog_increment))
+                    if 'Please Wait' not in rsp:
+                        self.ySum = self.ySum+direction*self.jog_increment
+                    
                 elif axis == "Z" and (0 <= (self.zSum+direction*self.jog_increment) <= self.zlim):
-                    self.send(axis+str(direction*self.jog_increment))
+                    rsp = self.send(axis+str(direction*self.jog_increment))
+                    if 'Please Wait' not in rsp:
+                        self.zSum = self.zSum+direction*self.jog_increment
                 else:
-                    print(f"[ERROR][JOG] Software imposed Jogging Limit Exceeded in {axis}.\n    X Limit: {self.xlim}\n    Y Limit: {self.ylim}\n    Z Limit: {self.zlim}\n")
+                    print(f"[ERROR][JOG] Software imposed Jogging Limit Exceeded in {axis}.\n    X Limit: {self.xlim} Pos: {self.xSum}\n    Y Limit: {self.ylim} Pos: {self.ySum}\n    Z Limit: {self.zlim} Pos: {self.zSum}\n")
 
             else:
                 self.send(axis+str(direction*self.jog_increment))
@@ -126,6 +135,8 @@ class gantryControl(QObject):
             print(f"[ERROR] Gantry is disconnected. Cannot execute All Stop.")
         else:
             self.send("A")
+            print("[ALL STOP] Home lost. Reset Home.")
+            self.homed = False
     
     # def populate_config_dropdown(self):
     #     config_folder = os.path.join(self.PARENT_DIRECTORY, "saved_print_configs")
