@@ -109,14 +109,15 @@ class gantryControl(QObject):
         self.comms.ser_con = None
         self.view.connectionStatus.setText("Disconnected, try to connect again.")
 
-    def send(self,msg):
+    def send(self,msg,silent=False):
         # sends messages and handles disconnects
         try:
             rsp = self.comms.sendAndReceive(msg)
             if rsp == False:
                 self.handle_disconnect()
             else:
-                print(rsp.strip('\n'))
+                if not silent:
+                    print(rsp.strip('\n'))
                 return rsp
         except Exception as e:
             self.handle_disconnect()
@@ -135,7 +136,8 @@ class gantryControl(QObject):
     def jog(self,axis:str,direction:float, increment=None):
         if increment is None:
             increment = self.jog_increment
-
+        # Check if gantry is still there
+        self.send("I",True)
         if self.comms.ser_con is None:
             print(f"[ERROR] Gantry is disconnected. Cannot jog.")
             return "Disconnect"
