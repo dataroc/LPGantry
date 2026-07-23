@@ -121,7 +121,7 @@ class GantryControlView(QWidget):
         self.jogSlider.setObjectName("jogSlider")
 
         self.jogSlider.setMinimum(1)
-        self.jogSlider.setMaximum(400)
+        self.jogSlider.setMaximum(300)
         self.jogSlider.setValue(50)
 
         self.jogValueLabel = QLabel("50 mm")
