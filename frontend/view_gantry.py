@@ -194,6 +194,19 @@ class GantryControlView(QWidget):
         leftLayout.addLayout(speedGrid)
         leftLayout.addWidget(self.sendSpeedButton)
 
+        # -------------------------------------------------------------
+        # Set Home
+        # -------------------------------------------------------------
+        self.homeGrid = QGridLayout()
+        self.setHomeButton = QPushButton("Set Home")
+        self.setHomeButton.setObjectName("setHomeButton")
+        self.returnHomeButton = QPushButton("Go Home")
+        # self.setHomeButton.setObjectName("setHomeButton")
+        self.homeGrid.addWidget(self.setHomeButton,0,0)
+        self.homeGrid.addWidget(self.returnHomeButton,0,1)
+
+        leftLayout.addLayout(self.homeGrid)
+
         jogGrid.addWidget(self.xMinusButton, 0, 0)
         jogGrid.addWidget(self.xPlusButton, 0, 1)
 
@@ -208,18 +221,7 @@ class GantryControlView(QWidget):
 
         
 
-        # -------------------------------------------------------------
-        # Set Home
-        # -------------------------------------------------------------
-        self.homeGrid = QGridLayout()
-        self.setHomeButton = QPushButton("Set Home")
-        self.setHomeButton.setObjectName("setHomeButton")
-        self.returnHomeButton = QPushButton("Go Home")
-        # self.setHomeButton.setObjectName("setHomeButton")
-        self.homeGrid.addWidget(self.setHomeButton,0,0)
-        self.homeGrid.addWidget(self.returnHomeButton,0,1)
-
-        leftLayout.addLayout(self.homeGrid)
+        
 
         # Output window for messages/errors
         leftLayout.addWidget(QLabel("Output"))
