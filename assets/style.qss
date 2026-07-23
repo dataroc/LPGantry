@@ -24,20 +24,18 @@ QTabWidget{
     font-size: 11pt;
 }
 QTabBar::tab:selected{
-    background-color: rgb(108, 107, 136);
+    background-color: rgb(4,94,127);
 }
 QTabBar::tab:hover{
-    background-color: rgb(158, 157, 186);
-    color: black;
+    background-color: rgb(26,125,162);
 }
 QTabBar::tab {
     border-radius: 4px;
     padding: 4px 4px 4px 4px;
-    background-color: rgb(78, 77, 106);
+    background-color: rgb(72,74,78);
 }
 QTabWidget::pane{
     padding-top: 1px;
-    background-color: rgb(63, 63, 63);
 }
 /*==========================================================
     MAIN WINDOW
@@ -72,7 +70,7 @@ QLabel#connectionStatus
 
 QLabel#valueLabel
 {
-    color: rgba(23, 195, 178);
+    color: rgb(220,220,220);
     font-weight: bold;
     min-width: 32px;
     text-align: right;
@@ -82,6 +80,13 @@ QLabel#jogSliderLabel,
 QLabel#speedSliderLabel
 {
     color: rgb(220,220,220);
+}
+
+QLabel#outputLabel
+{
+    color: rgb(92,94,98);
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 
@@ -195,6 +200,25 @@ QPushButton#setHomeButton:pressed
     background-color: rgb(26,100,128);
 }
 
+/*----------------------------------------------------------
+    Go Home
+----------------------------------------------------------*/
+
+QPushButton#goHomeButton
+{
+    background-color: rgb(255,203,119);
+    color: black;
+}
+
+QPushButton#goHomeButton:hover
+{
+    background-color: rgb(255,223,139);
+}
+
+QPushButton#goHomeButton:pressed
+{
+    background-color: rgb(235,183,99);
+}
 
 /*----------------------------------------------------------
     Emergency Stop
@@ -203,7 +227,7 @@ QPushButton#setHomeButton:pressed
 QPushButton#allStop
 {
     background-color: rgb(254,109,115);
-    color: rgb(214,69,75);
+    color: rgb(194,49,55);
     font-weight: bold;
     font-size: 48pt;
 }
@@ -211,15 +235,26 @@ QPushButton#allStop
 QPushButton#allStop:hover
 {
     background-color: rgb(255,132,138);
-    color: rgb(224,79,85);
+    color: rgb(204,59,65);
 }
 
 QPushButton#allStop:pressed
 {
     background-color: rgb(215,75,80);
-    color: rgb(204,59,65);
+    color: rgb(174,29,35);
 }
 
+/*==========================================================
+    QTextEdit
+==========================================================*/
+
+QTextEdit#outputWindow
+{
+    background-color: rgb(22,24,28);
+    color: rgb(92,94,98);
+    border-radius: 3px;
+    padding-top: 0px;
+}
 
 /*==========================================================
     SLIDERS

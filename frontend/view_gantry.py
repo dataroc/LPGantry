@@ -99,13 +99,17 @@ class GantryControlView(QWidget):
        
 
         # Connect
+        connectionLayout = QVBoxLayout()
+        connectionLayout.setSpacing(4)
         self.connectionStatus = QLabel("Not Connected")
         self.connectionStatus.setObjectName("connectionStatus")
         self.connectGantryButton = QPushButton("Connect to Gantry")
         self.connectGantryButton.setObjectName("Connect")
 
-        leftLayout.addWidget(self.connectionStatus)
-        leftLayout.addWidget(self.connectGantryButton)
+        
+        connectionLayout.addWidget(self.connectGantryButton)
+        connectionLayout.addWidget(self.connectionStatus)
+        leftLayout.addLayout(connectionLayout)
 
         jogLabel = QLabel("Jog Controls")
         jogLabel.setObjectName("sectionHeader")
@@ -200,21 +204,23 @@ class GantryControlView(QWidget):
         self.homeGrid = QGridLayout()
         self.setHomeButton = QPushButton("Set Home")
         self.setHomeButton.setObjectName("setHomeButton")
-        self.returnHomeButton = QPushButton("Go Home")
-        # self.setHomeButton.setObjectName("setHomeButton")
+        self.goHomeButton = QPushButton("Go Home")
+        self.goHomeButton.setObjectName("goHomeButton")
         self.homeGrid.addWidget(self.setHomeButton,0,0)
-        self.homeGrid.addWidget(self.returnHomeButton,0,1)
+        self.homeGrid.addWidget(self.goHomeButton,0,1)
 
         leftLayout.addLayout(self.homeGrid)
 
-        jogGrid.addWidget(self.xMinusButton, 0, 0)
-        jogGrid.addWidget(self.xPlusButton, 0, 1)
+        jogGrid.addWidget(self.xMinusButton, 1, 0)
+        jogGrid.addWidget(self.xPlusButton, 1, 2)
 
-        jogGrid.addWidget(self.yMinusButton, 1, 0)
-        jogGrid.addWidget(self.yPlusButton, 1, 1)
+        jogGrid.addWidget(self.yMinusButton, 2, 1)
+        jogGrid.addWidget(self.yPlusButton, 0, 1)
 
-        jogGrid.addWidget(self.zMinusButton, 2, 0)
-        jogGrid.addWidget(self.zPlusButton, 2, 1)
+        jogGrid.addWidget(QLabel(""),0,3)
+
+        jogGrid.addWidget(self.zPlusButton, 0, 4)
+        jogGrid.addWidget(self.zMinusButton, 2, 4)
 
         leftLayout.addLayout(jogGrid)
         
@@ -224,11 +230,17 @@ class GantryControlView(QWidget):
         
 
         # Output window for messages/errors
-        leftLayout.addWidget(QLabel("Output"))
+        outputLayout = QVBoxLayout()
+        outputLayout.setSpacing(2)
+        self.outputLabel = QLabel("OUTPUT MONITOR")
+        self.outputLabel.setObjectName("outputLabel")
         self.output_window = QTextEdit()
+        self.output_window.setObjectName("outputWindow")
         self.output_window.setReadOnly(True)
-        self.output_window.setMaximumHeight(75)
-        leftLayout.addWidget(self.output_window)
+        self.output_window.setMaximumHeight(100)
+        outputLayout.addWidget(self.outputLabel)
+        outputLayout.addWidget(self.output_window)
+        leftLayout.addLayout(outputLayout)
 
         #leftLayout.addStretch()
 
@@ -378,7 +390,7 @@ class GantryControlView(QWidget):
             self.setHomeRequested.emit
         )
 
-        self.returnHomeButton.clicked.connect(
+        self.goHomeButton.clicked.connect(
             self.returnHomeRequested.emit
         )
 

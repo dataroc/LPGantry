@@ -59,14 +59,17 @@ class gantryControl(QObject):
 
 
     def set_home(self):
-        self.xSum = 0
-        self.ySum = 0
-        self.zSum = 0
-        self.homed = True
-        print("Gantry Home has been set.")
+        if self.comms.ser_con is None:
+            print("[ERROR] Gantry is disconnected. Home cannot be set.")
+        else:
+            self.xSum = 0
+            self.ySum = 0
+            self.zSum = 0
+            self.homed = True
+            print("Gantry Home has been set.")
 
     def return_home(self):
-        if self.homed:
+        if self.homed and self.comms.ser_con is not None:
             homing = ['X','Y','Z']
             dist = [self.xSum,self.ySum,self.zSum]
             old_speed = self.jog_speed

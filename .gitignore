@@ -1,6 +1,10 @@
 # Created by venv; see https://docs.python.org/3/library/venv.html
+**/__pycache__
 lib
 include
 bin
 pyvenv.cfg
-__pycache__
+*.cypython-314.pyc
+*.py[cod]
+*$py.class
+*.pyc
