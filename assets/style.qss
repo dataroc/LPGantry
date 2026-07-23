@@ -278,7 +278,7 @@ QSlider::sub-page:horizontal
 
 QSlider::handle:horizontal
 {
-    background: rgb(244,239,229);
+    background: rgb(70,72,77);
 
     width: 18px;
 
@@ -289,12 +289,12 @@ QSlider::handle:horizontal
 
 QSlider::handle:horizontal:hover
 {
-    background: rgb(255,255,255);
+    background: rgb(90,92,97);
 }
 
 QSlider::handle:horizontal:pressed
 {
-    background: rgb(224,219,209);
+    background: rgb(50,52,57);
 }
 
 
